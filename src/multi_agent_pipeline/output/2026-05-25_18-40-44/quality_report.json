@@ -1,0 +1,44 @@
+{
+  "summary": {
+    "总题目数": 2,
+    "总学生案例数": 6,
+    "通过审核数": 6,
+    "被拒绝数": 0,
+    "通过率": "100.0%",
+    "最终训练数据": 6,
+    "平均质量分": "99.9"
+  },
+  "per_question_details": [
+    {
+      "question_id": "6fc5db7d-265e-46c1-9154-23ef3e07abd8",
+      "question_preview": "在复平面内,复数z=(1+2i)i对应的点位于 A.第一象限 B.第二象限 C.第三象限 D.第四象限...",
+      "difficulty": 1,
+      "knowledge_points": [
+        "复数的乘法运算（分配律的应用）",
+        "虚数单位的性质（核心考点：$i^2 = -1$）",
+        "复数的标准代数形式（$z = a + bi$，$a,b \\in \\mathbb{R}$）",
+        "复数的几何意义（复数 $a+bi$ 与复平面内点 $(a,b)$ 的一一对应关系）",
+        "平面直角坐标系中各象限的符号特征"
+      ],
+      "student_cases_count": 3,
+      "passed_count": 3,
+      "rejected_count": 0,
+      "avg_quality_score": 99.83333333333333
+    },
+    {
+      "question_id": "ce73e1d8-b87b-4b5e-8bc0-ec5e4041c8bc",
+      "question_preview": "已知$y=f(x)$是奇函数，当$x≥0$时，$f(x)=x^{\\frac{2}{3}}$，则$ f(-8)$的值是____....",
+      "difficulty": 2,
+      "knowledge_points": [
+        "奇函数的定义与性质（$f(-x) = -f(x)$）",
+        "限制定义域（分段）的函数求值",
+        "分数指数幂的意义与运算性质",
+        "幂的乘方运算法则（$(a^m)^n = a^{mn}$）"
+      ],
+      "student_cases_count": 3,
+      "passed_count": 3,
+      "rejected_count": 0,
+      "avg_quality_score": 100.0
+    }
+  ]
+}

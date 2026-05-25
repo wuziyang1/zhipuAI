@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>解题模型示例</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #1e293b;
+    }
+
+    h1.page-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 48px;
+      background: linear-gradient(90deg, #6d28d9, #2563eb, #059669);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cards-container {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      animation: fadeUp 0.5s ease both;
+    }
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.25s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .card:nth-child(1) .card-header { background: linear-gradient(135deg, #ede9fe, #dbeafe); }
+    .card:nth-child(2) .card-header { background: linear-gradient(135deg, #ccfbf1, #dbeafe); }
+
+    .card-num {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 700; flex-shrink: 0;
+      color: #ffffff;
+    }
+    .card:nth-child(1) .card-num { background: #7c3aed; }
+    .card:nth-child(2) .card-num { background: #0d9488; }
+
+    .card-meta { flex: 1; }
+    .card-meta h2 { font-size: 0.95rem; font-weight: 600; color: #0f172a; margin-bottom: 6px; }
+    .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .badge {
+      padding: 3px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .badge-type  { background: #ede9fe; color: #6d28d9; border: 1px solid #c4b5fd; }
+    .badge-level { background: #ccfbf1; color: #0f766e; border: 1px solid #99f6e4; }
+
+    .answer-pill {
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      color: #15803d;
+      white-space: nowrap;
+    }
+
+    /* Chat area */
+    .chat-area {
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      background: #f8fafc;
+    }
+
+    /* Row wrappers */
+    .msg-row-user {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .msg-row-ai {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    /* Message meta label */
+    .msg-col { display: flex; flex-direction: column; gap: 6px; max-width: 88%; }
+    .msg-col-ai { align-items: flex-start; }
+    .msg-col-user { align-items: flex-end; }
+    .msg-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+
+    /* Avatars */
+    .avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .av-user { background: #dbeafe; }
+    .av-ai   { background: #d1fae5; }
+
+    /* Bubbles */
+    .bubble-user {
+      background: linear-gradient(135deg, #eff6ff, #e0e7ff);
+      border: 1px solid #bfdbfe;
+      border-radius: 18px 4px 18px 18px;
+      padding: 14px 18px;
+      font-size: 0.96rem;
+      line-height: 1.75;
+      color: #1e3a5f;
+    }
+
+    .bubble-ai {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px 18px 18px 18px;
+      padding: 18px 22px;
+      font-size: 0.87rem;
+      line-height: 1.8;
+      color: #334155;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      max-height: 560px;
+      overflow-y: auto;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .bubble-ai::-webkit-scrollbar { width: 4px; }
+    .bubble-ai::-webkit-scrollbar-track { background: #f1f5f9; }
+    .bubble-ai::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+    /* Markdown styles inside ai bubble */
+    .bubble-ai h2 {
+      font-size: 1rem; color: #6d28d9;
+      margin: 18px 0 8px; border-bottom: 1px solid #e9d5ff; padding-bottom: 4px;
+    }
+    .bubble-ai h3 { font-size: 0.92rem; color: #1d4ed8; margin: 14px 0 6px; }
+    .bubble-ai h4 { font-size: 0.88rem; color: #0f766e; margin: 10px 0 4px; }
+    .bubble-ai p  { margin-bottom: 8px; }
+    .bubble-ai ul, .bubble-ai ol { padding-left: 20px; margin-bottom: 8px; }
+    .bubble-ai li { margin-bottom: 4px; }
+    .bubble-ai strong { color: #92400e; }
+    .bubble-ai em    { color: #9d174d; }
+    .bubble-ai code  {
+      background: #f1f5f9; color: #0f172a;
+      padding: 1px 6px; border-radius: 4px;
+      font-size: 0.84rem; border: 1px solid #e2e8f0;
+    }
+    .bubble-ai blockquote {
+      border-left: 3px solid #818cf8;
+      margin: 8px 0; padding-left: 12px;
+      color: #64748b;
+    }
+    .bubble-ai hr { border: none; border-top: 1px solid #e2e8f0; margin: 14px 0; }
+    .bubble-ai table {
+      border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 0.85rem;
+    }
+    .bubble-ai th, .bubble-ai td {
+      border: 1px solid #e2e8f0; padding: 6px 12px; text-align: left;
+    }
+    .bubble-ai th { background: #f1f5f9; font-weight: 600; color: #1e293b; }
+
+    /* Toggle button */
+    .toggle-wrap { display: flex; justify-content: flex-start; padding-left: 48px; }
+    .toggle-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #64748b;
+      padding: 5px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      transition: all .2s;
+    }
+    .toggle-btn:hover { background: #f1f5f9; color: #1e293b; border-color: #cbd5e1; }
+    .arrow { display: inline-block; transition: transform .25s; }
+
+    .page-footer {
+      text-align: center;
+      margin-top: 52px;
+      color: #94a3b8;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+<h1 class="page-title">解题模型示例</h1>
+
+<div class="cards-container" id="cards"></div>
+
+<div class="page-footer">渲染引擎：MathJax 3 + Marked.js</div>
+
+<script type="application/json" id="raw-data">
+[
+  {
+    "conversations": [
+      {
+        "from": "human",
+        "value": "在\"新零售\"模式的背景下，自由职业越来越流行，诸如淘宝店主、微商等等.现调研某行业自由职业者的工资收入情况，对该行业 10 个自由职业者人均年收入 $y$（千元）与平均每天的工作时间 $x$ (小时)进行调查统计，得出 $y$ 与 $x$ 具有线性相关关系，且线性回归方程为 $\\hat y=12x+60$.若自由职业者平均每天工作的时间为 5 小时，估计该自由职业者年收入为 A.50 千元 B.60 千元 C.120 千元 D.72 千元"
+      },
+      {
+        "from": "gpt",
+        "value": "## 第一步：弄清问题（破题与分析）\n\n### 1. 题型识别\n- **题型**：统计学基础应用题 / 线性回归分析。\n- **核心考点**：线性回归方程的物理意义、利用回归方程进行数值预测（点估计）。\n\n### 2. 知识点关联\n要解决此问题，需要牢固掌握以下知识点：\n1.  **变量识别与定义**：明确自变量 $x$ 代表"平均每天工作时间"，因变量 $y$ 代表"人均年收入"，这是代入计算的前提。\n2.  **线性回归方程 ($\\hat y = \\hat b x + \\hat a$)**：理解这是一个用于描述变量间线性关系的数学模型，本题中为 $\\hat y=12x+60$。\n3.  **回归预测的本质**：利用已知的回归方程，将新的 $x$ 值代入，求出的 $\\hat y$ 是 $y$ 的**估计值**或预测值，而非绝对准确的实际值。\n4.  **单位换算与敏感度**：注意 $y$ 的单位是"千元"，在解题和选选项时需保持单位一致。\n\n### 3. 破题思路/切入点\n- **目标**：求解自由职业者每天工作 5 小时的年收入估计值。\n- **逆向推导逻辑**：\n  求年收入估计值 ($\\hat y$) $\\rightarrow$ 需要找到 $y$ 与 $x$ 的数量关系 $\\rightarrow$ 题目已给出线性回归方程 $\\hat y=12x+60$ $\\rightarrow$ 确定此时的自变量 $x$ 是多少 $\\rightarrow$ 题目给出"平均每天工作的时间为 5 小时" $\\rightarrow$ 令 $x=5$ 代入方程计算。\n\n### 4. 易错点提示\n根据经验，学生在解答此类问题时最容易犯的错误：\n1.  **变量混淆**：没有仔细审题，错误地将 $x=5$ 当作 $y=5$ 代入，或者试图反解 $x$。虽然本题数字差异明显，但在复杂题目中容易出错。\n2.  **忽视"估计"二字**：虽然计算过程是代数运算，但在概念理解上，学生容易忘记求出的 $120$ 是一个统计学上的"平均趋势"或"预测值"，而非某个具体人的真实收入。\n3.  **单位陷阱**：题目单位是"千元"，选项有时会混合"元"和"千元"（例如选项出现 120000 元 和 120 元），学生容易看错数量级。\n4.  **运算失误**：在简单的 $12 \\times 5 + 60$ 运算中，先加后乘（$(5+60)\\times 12$）或者单纯的心算错误。\n\n---\n\n## 第二步：详细解题过程\n\n### 解题步骤\n\n#### 步骤 1：提取关键信息并对应变量\n- **步骤目标**：明确已知条件中数值对应的数学变量。\n- **思路**：（为了确保数值代入公式的正确性，必须先建立文字语言到数学符号的映射。）\n- **推导过程**：\n  根据题意：\n  - 自变量 $x$ = 平均每天工作时间（小时）\n  - 因变量 $y$ = 人均年收入（千元）\n  - 回归方程：$\\hat y = 12x + 60$\n  - 题目给定条件："平均每天工作的时间为 5 小时" $\\Rightarrow$ 即 $x = 5$。\n\n#### 步骤 2：代入回归方程进行计算\n- **步骤目标**：计算 $x=5$ 时的年收入估计值。\n- **思路**：（回归方程的作用即为预测。将已知自变量的值代入方程，即可得到因变量的估计值。）\n- **推导过程**：\n  将 $x = 5$ 代入方程 $\\hat y = 12x + 60$ 中：\n  $$ \\hat y = 12 \\times 5 + 60 $$\n  $$ \\hat y = 60 + 60 $$\n  $$ \\hat y = 120 $$\n\n#### 步骤 3：结合单位得出结论\n- **步骤目标**：匹配计算结果与选项。\n- **思路**：（检查计算结果的单位是否与题目和选项一致，避免数量级错误。）\n- **推导过程**：\n  计算结果为 120，题目中 $y$ 的单位为"千元"。\n  因此，估计该自由职业者年收入为 120 千元。\n  对比选项：\n  A. 50 千元\n  B. 60 千元\n  C. 120 千元\n  D. 72 千元\n  结果与 C 选项吻合。\n\n### 最终结论\n\\boxed{C}"
+      }
+    ],
+    "id": "144dc90d-f0c2-4b40-b310-4b199002d0f9",
+    "quesType": "单选题",
+    "quesAnswer": "C",
+    "level": "容易"
+  },
+  {
+    "conversations": [
+      {
+        "from": "human",
+        "value": "若 $xlog_32$ =1,则 $2^x$ + $2^{-x}$ =______."
+      },
+      {
+        "from": "gpt",
+        "value": "## 第一步：弄清问题（破题与分析）\n\n### 1. 题型识别\n- **题型**：本题属于**指数与对数综合运算**题型。\n- **核心考点**：主要考察对数换底公式、对数基本恒等式以及指数幂的负指数性质。\n\n### 2. 知识点关联\n要解决此问题，需要牢固掌握以下知识点：\n1.  **对数的定义与基本变换**：已知 $A \\cdot B = 1$，则 $A$ 与 $B$ 互为倒数，即 $x = \\frac{1}{\\log_3 2}$。\n2.  **换底公式（倒数关系）**：$\\log_a b = \\frac{1}{\\log_b a}$。在本题中，用于将 $\\frac{1}{\\log_3 2}$ 转化为 $\\log_2 3$，这是解题的关键一步，目的是统一底数。\n3.  **对数基本恒等式**：$a^{\\log_a N} = N$。这是化简 $2^{\\log_2 3}$ 的核心公式，直接消去指数和对数符号。\n4.  **负指数幂运算**：$a^{-n} = \\frac{1}{a^n}$。用于将 $2^{-x}$ 转化为 $\\frac{1}{2^x}$ 进行计算。\n\n### 3. 破题思路/切入点\n- **目标**：求 $2^x + 2^{-x}$ 的值\n- **逆向推导逻辑**：\n  要求 $2^x + 2^{-x}$ $\\rightarrow$ 需要先求出 $2^x$ 的值 $\\rightarrow$ 观察底数为2，指数为 $x$，故需要将 $x$ 表示为以2为底的对数 $\\rightarrow$ 回到已知条件 $x \\log_3 2 = 1$ $\\rightarrow$ 得到 $x = \\frac{1}{\\log_3 2}$ $\\rightarrow$ 利用换底公式变形为 $x = \\log_2 3$。\n\n### 4. 易错点提示\n根据经验，学生在解答此类问题时最容易犯的错误：\n1.  **公式记忆混淆**：不能熟练运用 $\\frac{1}{\\log_a b} = \\log_b a$，导致 $x$ 一直保留在 $\\frac{1}{\\log_3 2}$ 的形式，无法与底数2进行化简。\n2.  **恒等式运用生疏**：算出 $x = \\log_2 3$ 后，不知道 $2^{\\log_2 3}$ 等于多少，或者错误地计算为 $2 \\times 3 = 6$ 或其他数值。\n3.  **运算符号错误**：在计算 $2^{-x}$ 时，误以为是 $-2^x$（即 $-3$），而忽略了负指数代表倒数的含义（应为 $\\frac{1}{3}$）。\n4.  **通分计算失误**：最后一步 $3 + \\frac{1}{3}$ 简单的分数加法，虽简单但容易因粗心算错。\n\n---\n\n## 第二步：详细解题过程\n\n### 解题步骤\n\n**步骤1：利用已知条件解出 $x$ 并进行换底变形**\n- **思路**：（已知乘积为1，先求出 $x$ 的表达式。为了后续能利用 $2^x$ 进行化简，必须根据"同底数"原则，利用换底公式的推论将对数的底数变为2。）\n- **推导过程**：\n  由已知条件 $x \\log_3 2 = 1$，得：\n  $$x = \\frac{1}{\\log_3 2}$$\n  利用换底公式 $\\frac{1}{\\log_a b} = \\log_b a$，得：\n  $$x = \\log_2 3$$\n\n**步骤2：计算 $2^x$ 的值**\n- **思路**：（将变形后的 $x$ 代入指数式。利用对数恒等式 $a^{\\log_a N} = N$ 直接化简。）\n- **推导过程**：\n  $$2^x = 2^{\\log_2 3}$$\n  根据对数恒等式，底数相同（均为2），直接消去得：\n  $$2^x = 3$$\n\n**步骤3：计算 $2^{-x}$ 的值**\n- **思路**：（利用负指数幂的定义 $a^{-n} = \\frac{1}{a^n}$ 将其转化为倒数形式。）\n- **推导过程**：\n  $$2^{-x} = \\frac{1}{2^x}$$\n  将步骤2的结果代入：\n  $$2^{-x} = \\frac{1}{3}$$\n\n**步骤4：代入原式求和**\n- **思路**：（将前两步的结果相加，进行分数的加法运算。）\n- **推导过程**：\n  $$2^x + 2^{-x} = 3 + \\frac{1}{3}$$\n  通分计算：\n  $$= \\frac{9}{3} + \\frac{1}{3} = \\frac{10}{3}$$\n\n### 最终结论\n\\boxed{\\frac{10}{3}}"
+      }
+    ],
+    "id": "bb326d15-ba61-4a6f-90db-cc71097c6d11",
+    "quesType": "填空题",
+    "quesAnswer": "<p><span class=\"math-tex\">$\\dfrac{10}{3}$</span></p>",
+    "level": "容易"
+  }
+]
+</script>
+
+<script>
+const items = JSON.parse(document.getElementById('raw-data').textContent);
+
+const colors = [
+  { header: 'linear-gradient(135deg,#ede9fe,#dbeafe)', num: '#7c3aed' },
+  { header: 'linear-gradient(135deg,#ccfbf1,#dbeafe)', num: '#0d9488' }
+];
+
+function renderAnswer(raw) {
+  return raw.replace(/<[^>]+>/g, '').trim();
+}
+
+function render() {
+  const container = document.getElementById('cards');
+  items.forEach((item, idx) => {
+    const human = item.conversations.find(c => c.from === 'human');
+    const gpt   = item.conversations.find(c => c.from === 'gpt');
+    const id    = 'sol-' + idx;
+    const c     = colors[idx] || colors[0];
+
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const gptHtml = gpt ? marked.parse(gpt.value) : '';
+
+    card.innerHTML = `
+      <div class="card-header" style="background:${c.header}">
+        <div class="card-num" style="background:${c.num}">${idx + 1}</div>
+        <div class="card-meta">
+          <h2>第 ${idx + 1} 题</h2>
+          <div class="badges">
+            <span class="badge badge-type">${item.quesType}</span>
+            <span class="badge badge-level">难度：${item.level}</span>
+          </div>
+        </div>
+        <div class="answer-pill">答案：${renderAnswer(item.quesAnswer)}</div>
+      </div>
+
+      <div class="chat-area">
+
+        <!-- User input bubble -->
+        <div class="msg-row-user">
+          <div class="msg-col msg-col-user">
+            <span class="msg-label">用户输入</span>
+            <div class="bubble-user">${human ? human.value : ''}</div>
+          </div>
+          <div class="avatar av-user">🧑‍🎓</div>
+        </div>
+
+        <!-- Model output bubble -->
+        <div class="msg-row-ai">
+          <div class="avatar av-ai">🤖</div>
+          <div class="msg-col msg-col-ai" style="flex:1;min-width:0;">
+            <span class="msg-label">解题模型</span>
+            <div class="bubble-ai" id="${id}">${gptHtml}</div>
+          </div>
+        </div>
+
+        <!-- Toggle button -->
+        <div class="toggle-wrap">
+          <button class="toggle-btn" onclick="toggle('${id}',this)">
+            <span class="arrow">&#9660;</span>&nbsp;收起解析
+          </button>
+        </div>
+
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  if (window.MathJax) MathJax.typesetPromise();
+}
+
+function toggle(id, btn) {
+  const box = document.getElementById(id);
+  const isCollapsed = btn.classList.toggle('collapsed');
+  if (isCollapsed) {
+    box.style.maxHeight = '0';
+    box.style.overflow  = 'hidden';
+    box.style.padding   = '0 22px';
+    btn.innerHTML = '<span class="arrow" style="transform:rotate(-90deg);display:inline-block">&#9660;</span>&nbsp;展开解析';
+  } else {
+    box.style.maxHeight = '560px';
+    box.style.overflow  = 'auto';
+    box.style.padding   = '18px 22px';
+    btn.innerHTML = '<span class="arrow" style="display:inline-block">&#9660;</span>&nbsp;收起解析';
+  }
+}
+
+render();
+</script>
+</body>
+</html>
