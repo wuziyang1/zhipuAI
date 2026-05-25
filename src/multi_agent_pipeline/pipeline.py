@@ -4,7 +4,7 @@
 """
 
 import random
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from agents import (
     AnalyzerAgent,
     StudentAgent,
@@ -213,7 +213,11 @@ class MultiAgentPipeline:
             'statistics': integration_result['statistics']
         }
     
-    def process_batch(self, questions: List[Dict[str, Any]]) -> Dict[str, Any]:
+    def process_batch(
+        self,
+        questions: List[Dict[str, Any]],
+        training_writers: Optional[Any] = None,
+    ) -> Dict[str, Any]:
         """
         批量处理多个题目
         
@@ -231,7 +235,10 @@ class MultiAgentPipeline:
         print(f"[Pipeline] 开始批量处理{len(questions)}个题目")
         print(f"{'='*60}")
         
+        from utils import build_overall_statistics
+
         all_results = []
+        all_training_data = []
         all_passed_cases = []
         all_rejected_cases = []
         
@@ -242,33 +249,20 @@ class MultiAgentPipeline:
             
             result = self.process_single_question(question_data)
             all_results.append(result)
+            all_training_data.extend(result['training_data'])
             all_passed_cases.extend(result['passed_cases'])
             all_rejected_cases.extend(result['rejected_cases'])
+
+            if training_writers and result['training_data']:
+                training_writers.add(result['training_data'])
         
-        # 批量整合
-        print(f"\n{'='*60}")
-        print(f"[Pipeline] 批量整合所有数据")
-        print(f"{'='*60}")
-        
-        integration_data = []
-        for result in all_results:
-            integration_data.append({
-                'question': result['question'],
-                'analysis': result['analysis'],
-                'passed_cases': result['passed_cases']
-            })
-        
-        final_result = self.integrator.batch_process(integration_data)
-        
-        # 总体统计
-        overall_statistics = final_result['overall_statistics']
-        overall_statistics.update({
-            'total_student_cases': sum(len(r['student_cases']) for r in all_results),
-            'total_passed_cases': len(all_passed_cases),
-            'total_rejected_cases': len(all_rejected_cases),
-            'pass_rate': len(all_passed_cases) / (len(all_passed_cases) + len(all_rejected_cases)) * 100 
-                        if (len(all_passed_cases) + len(all_rejected_cases)) > 0 else 0
-        })
+        overall_statistics = build_overall_statistics(
+            all_results,
+            all_training_data,
+            all_passed_cases,
+            all_rejected_cases,
+            len(questions),
+        )
         
         print(f"\n{'='*60}")
         print(f"[Pipeline] 批量处理完成")
@@ -283,7 +277,7 @@ class MultiAgentPipeline:
         
         return {
             'all_results': all_results,
-            'all_training_data': final_result['training_data'],
+            'all_training_data': all_training_data,
             'all_rejected_cases': all_rejected_cases,
             'overall_statistics': overall_statistics
         }

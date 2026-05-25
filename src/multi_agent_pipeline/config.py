@@ -19,7 +19,14 @@ INPUT_TRAIN_DATA = 'data/train_sharegpt.json'
 OUTPUT_DIR = 'src/multi_agent_pipeline/output'
 
 # 处理数量
-NUM_RECORDS = 2  # 处理的题目数量（None表示全部）
+NUM_RECORDS = 50  # 处理的题目数量（None表示全部）
+
+# 分层抽样（按 hjy_all.json 的 presetDifficulty 均衡抽题）
+STRATIFIED_SAMPLING = True
+HJY_METADATA_FILE = 'data/hjy_all.json'
+HJY_DIFFICULTY_CACHE = 'data/hjy_difficulty_index.json'
+STRATIFIED_DIFFICULTY_LEVELS = ['容易', '较易', '中等', '较难', '困难']
+SAMPLING_RANDOM_SEED = 42
 
 # ==================== 学生智能体配置 ====================
 STUDENT_LEVELS = [
@@ -86,6 +93,9 @@ SAVE_INTERMEDIATE_RESULTS = True
 
 # 是否保存被拒绝的案例
 SAVE_REJECTED_CASES = True
+
+# 训练数据增量写入：每累积 N 条写入一次文件
+INCREMENTAL_FLUSH_SIZE = 5
 
 # 输出文件名
 OUTPUT_FILES = {

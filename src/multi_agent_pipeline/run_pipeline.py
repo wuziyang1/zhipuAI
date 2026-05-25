@@ -16,8 +16,9 @@ from utils import (
     load_training_data,
     save_json,
     generate_quality_report,
-    generate_minimal_training_data,
-    print_sample_data
+    print_sample_data,
+    TrainingDataWriters,
+    _resolve_project_path,
 )
 
 
@@ -46,13 +47,23 @@ def main():
     print(f"  质量阈值: {config.QUALITY_THRESHOLD}")
     print(f"  最大重试: {config.MAX_RETRY_ATTEMPTS}")
     print(f"  启用并行: {config.ENABLE_PARALLEL}")
+    print(f"  增量写入阈值: 每 {config.INCREMENTAL_FLUSH_SIZE} 条")
+    print(f"  分层抽样: {config.STRATIFIED_SAMPLING}")
+    if config.STRATIFIED_SAMPLING:
+        print(f"  难度档位: {config.STRATIFIED_DIFFICULTY_LEVELS}")
+        print(f"  随机种子: {config.SAMPLING_RANDOM_SEED}")
     print()
     
     # 加载数据
     try:
         questions = load_training_data(
             config.INPUT_TRAIN_DATA,
-            config.NUM_RECORDS
+            config.NUM_RECORDS,
+            stratified=config.STRATIFIED_SAMPLING,
+            hjy_metadata_file=config.HJY_METADATA_FILE,
+            hjy_cache_file=config.HJY_DIFFICULTY_CACHE,
+            stratified_levels=config.STRATIFIED_DIFFICULTY_LEVELS,
+            random_seed=config.SAMPLING_RANDOM_SEED,
         )
     except FileNotFoundError:
         print(f"错误：找不到文件 {config.INPUT_TRAIN_DATA}")
@@ -66,6 +77,28 @@ def main():
         print("错误：没有加载到任何题目")
         return
     
+    # 每次运行创建独立的日期时间子目录（处理前创建，便于增量写入）
+    run_timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    run_output_dir = os.path.join(config.OUTPUT_DIR, run_timestamp)
+    os.makedirs(_resolve_project_path(run_output_dir), exist_ok=True)
+    print(f"\n本次输出目录: {run_output_dir}")
+
+    training_data_path = os.path.join(
+        run_output_dir, config.OUTPUT_FILES['training_data']
+    )
+    minimal_data_path = os.path.join(run_output_dir, 'training_data_minimal.json')
+
+    training_writers = TrainingDataWriters(
+        run_output_dir,
+        config.OUTPUT_FILES['training_data'],
+        flush_every=config.INCREMENTAL_FLUSH_SIZE,
+    )
+    print(
+        f"\n训练数据将每 {config.INCREMENTAL_FLUSH_SIZE} 条增量写入:"
+        f"\n  - {_resolve_project_path(training_data_path)}"
+        f"\n  - {_resolve_project_path(minimal_data_path)}"
+    )
+
     # 初始化Pipeline
     print("\n初始化Pipeline...")
     if config.ENABLE_PARALLEL:
@@ -75,27 +108,20 @@ def main():
     
     # 运行Pipeline
     print("\n开始处理数据...")
-    results = pipeline.process_batch(questions)
-    
-    # 每次运行创建独立的日期时间子目录
-    run_timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    run_output_dir = os.path.join(config.OUTPUT_DIR, run_timestamp)
-    os.makedirs(run_output_dir, exist_ok=True)
-    print(f"\n本次输出目录: {run_output_dir}")
+    results = None
+    try:
+        results = pipeline.process_batch(questions, training_writers=training_writers)
+    finally:
+        training_writers.finalize()
+
+    if not results:
+        print("\n处理未完成，已保存已生成的增量训练数据（如有）")
+        return
     
     # 保存原始数据（包含所有中间结果）
     if config.SAVE_INTERMEDIATE_RESULTS:
         raw_data_path = os.path.join(run_output_dir, config.OUTPUT_FILES['raw_data'])
         save_json(results['all_results'], raw_data_path)
-    
-    # 保存训练数据（完整版，包含元数据）
-    training_data_path = os.path.join(run_output_dir, config.OUTPUT_FILES['training_data'])
-    save_json(results['all_training_data'], training_data_path)
-    
-    # 保存训练数据（纯净版，只保留conversations）
-    minimal_data = generate_minimal_training_data(results['all_training_data'])
-    minimal_data_path = os.path.join(run_output_dir, 'training_data_minimal.json')
-    save_json(minimal_data, minimal_data_path)
     
     # 保存质量报告
     quality_report_path = os.path.join(run_output_dir, config.OUTPUT_FILES['quality_report'])

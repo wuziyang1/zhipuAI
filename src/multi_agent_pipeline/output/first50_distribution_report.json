@@ -1,0 +1,563 @@
+{
+  "num_records": 50,
+  "hjy_matched": 50,
+  "hjy_missing_ids": [],
+  "preset_difficulty": {
+    "容易": 22,
+    "中等": 4,
+    "较易": 24
+  },
+  "star_distribution": {
+    "1": 22,
+    "2": 24,
+    "3": 4
+  },
+  "ques_type": {
+    "单选题": 34,
+    "填空题": 15,
+    "判断题": 1
+  },
+  "year": {
+    "2022": 5,
+    "2020": 22,
+    "2021": 15,
+    "2024": 2,
+    "2023": 4,
+    "2019": 2
+  },
+  "knowledge_point_count_bucket": {
+    "1个": 28,
+    "2-3个": 22
+  },
+  "uniformity_tests": [
+    {
+      "label": "preset_difficulty",
+      "chi2": 14.56,
+      "df": 2,
+      "threshold_approx": 7.81,
+      "likely_uniform": false,
+      "max_pct": 48.0,
+      "min_pct": 8.0
+    },
+    {
+      "label": "star",
+      "chi2": 14.56,
+      "df": 2,
+      "threshold_approx": 7.81,
+      "likely_uniform": false,
+      "max_pct": 48.0,
+      "min_pct": 8.0
+    },
+    {
+      "label": "ques_type",
+      "chi2": 32.92,
+      "df": 2,
+      "threshold_approx": 7.81,
+      "likely_uniform": false,
+      "max_pct": 68.0,
+      "min_pct": 2.0
+    }
+  ],
+  "rows": [
+    {
+      "idx": 1,
+      "id": "6fc5db7d-265e-46c1-9154-23ef3e07abd8",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2022,
+      "kp_count": 1,
+      "kp_top": "复数与复平面内点的一一对应关系"
+    },
+    {
+      "idx": 2,
+      "id": "ce73e1d8-b87b-4b5e-8bc0-ec5e4041c8bc",
+      "preset_difficulty": "中等",
+      "star": 3,
+      "ques_type": "填空题",
+      "year": 2020,
+      "kp_count": 1,
+      "kp_top": "函数的奇偶性"
+    },
+    {
+      "idx": 3,
+      "id": "836c1bcd-88d1-45ea-8137-88bfb84551cd",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2021,
+      "kp_count": 1,
+      "kp_top": "概率"
+    },
+    {
+      "idx": 4,
+      "id": "e6a8e501-5dea-49ab-8848-63a1c8fe22b9",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "单选题",
+      "year": 2020,
+      "kp_count": 1,
+      "kp_top": "双曲线的焦点、焦距"
+    },
+    {
+      "idx": 5,
+      "id": "82a94e76-c478-4fae-94f7-d910b0722a8d",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2021,
+      "kp_count": 2,
+      "kp_top": "共轭复数"
+    },
+    {
+      "idx": 6,
+      "id": "6a6ce188-653a-457f-9a65-3767ad9184b1",
+      "preset_difficulty": "中等",
+      "star": 3,
+      "ques_type": "填空题",
+      "year": 2020,
+      "kp_count": 3,
+      "kp_top": "复数的模或绝对值"
+    },
+    {
+      "idx": 7,
+      "id": "2226a43e-ec92-4083-871f-715d312e2a0b",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2024,
+      "kp_count": 2,
+      "kp_top": "经过两点直线斜率公式"
+    },
+    {
+      "idx": 8,
+      "id": "47670f35-4356-44d1-8f8b-34d17f3ed07c",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2021,
+      "kp_count": 1,
+      "kp_top": "两角和的余弦公式"
+    },
+    {
+      "idx": 9,
+      "id": "503f8254-945c-4839-9089-7cf5d0faa340",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "单选题",
+      "year": 2021,
+      "kp_count": 2,
+      "kp_top": "共轭复数"
+    },
+    {
+      "idx": 10,
+      "id": "f2acf47a-ceaf-4634-97ac-70b93580eaf5",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "填空题",
+      "year": 2020,
+      "kp_count": 1,
+      "kp_top": "向量的模"
+    },
+    {
+      "idx": 11,
+      "id": "ef5d6dfa-b6b3-41b2-8a3f-e1011f05819e",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "填空题",
+      "year": 2020,
+      "kp_count": 1,
+      "kp_top": "平面向量数量积的坐标表示"
+    },
+    {
+      "idx": 12,
+      "id": "2d531cb3-8bdd-4d6b-9f87-fe68d9cbfe9d",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "单选题",
+      "year": 2022,
+      "kp_count": 2,
+      "kp_top": "交集"
+    },
+    {
+      "idx": 13,
+      "id": "71f0afa9-7745-4283-b004-583801686092",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "填空题",
+      "year": 2020,
+      "kp_count": 1,
+      "kp_top": "分段函数"
+    },
+    {
+      "idx": 14,
+      "id": "9b538086-aaff-4035-bd9d-a0ab9b5acd5b",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2020,
+      "kp_count": 1,
+      "kp_top": "复数的模或绝对值"
+    },
+    {
+      "idx": 15,
+      "id": "2fc9020f-1f6d-4fda-a4bc-3fe3562af8a1",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2022,
+      "kp_count": 1,
+      "kp_top": "集合"
+    },
+    {
+      "idx": 16,
+      "id": "60e8fe82-8cd1-4d84-a5c8-80821986ea36",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2021,
+      "kp_count": 1,
+      "kp_top": "从位移的合成到向量的加减法"
+    },
+    {
+      "idx": 17,
+      "id": "5f74c3a8-29b1-48f1-bd44-ddc5283fc991",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "填空题",
+      "year": 2021,
+      "kp_count": 1,
+      "kp_top": "求二项展开式的通项（第k+1项）"
+    },
+    {
+      "idx": 18,
+      "id": "f921fffe-dbac-417e-964a-d63cbb9a4955",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2020,
+      "kp_count": 3,
+      "kp_top": "平面向量数量积的坐标表示"
+    },
+    {
+      "idx": 19,
+      "id": "60e77516-dcc4-4b24-afda-1ac8edf70b5e",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "单选题",
+      "year": 2020,
+      "kp_count": 2,
+      "kp_top": "比较指数幂的大小"
+    },
+    {
+      "idx": 20,
+      "id": "3d327a4f-3ae3-44a7-a44f-a661d0226c68",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "单选题",
+      "year": 2020,
+      "kp_count": 2,
+      "kp_top": "等差数列的公差"
+    },
+    {
+      "idx": 21,
+      "id": "90757dd4-7ad2-41a0-b774-5a09103e8660",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "填空题",
+      "year": 2020,
+      "kp_count": 2,
+      "kp_top": "判断事件是否是随机事件"
+    },
+    {
+      "idx": 22,
+      "id": "f0fa0675-db83-4b8d-a9c2-66c857164483",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "单选题",
+      "year": 2021,
+      "kp_count": 2,
+      "kp_top": "复数与复平面内点的一一对应关系"
+    },
+    {
+      "idx": 23,
+      "id": "783157a1-a7e3-4994-acd6-e3df7cda1c89",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "单选题",
+      "year": 2021,
+      "kp_count": 2,
+      "kp_top": "共轭复数"
+    },
+    {
+      "idx": 24,
+      "id": "44951cee-81e0-4f0d-9747-56904a597398",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "单选题",
+      "year": 2023,
+      "kp_count": 1,
+      "kp_top": "圆与圆的位置关系"
+    },
+    {
+      "idx": 25,
+      "id": "caa1b466-1a20-4e82-bca9-7a7eae1f9f19",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "填空题",
+      "year": 2020,
+      "kp_count": 1,
+      "kp_top": "双曲线的渐近线"
+    },
+    {
+      "idx": 26,
+      "id": "4246c422-0296-44e0-8e20-2b37191815b6",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "填空题",
+      "year": 2020,
+      "kp_count": 2,
+      "kp_top": "两个向量的数量积（内积）"
+    },
+    {
+      "idx": 27,
+      "id": "d9f6d66a-8696-44c4-a2d0-71ccba2d039d",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2021,
+      "kp_count": 1,
+      "kp_top": "等比数列的概念"
+    },
+    {
+      "idx": 28,
+      "id": "60522996-6307-4eba-b75f-0f019056a2e5",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "填空题",
+      "year": 2020,
+      "kp_count": 1,
+      "kp_top": "平面向量的模"
+    },
+    {
+      "idx": 29,
+      "id": "ec0b856f-4a7e-43f1-be26-344677d025e7",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "单选题",
+      "year": 2020,
+      "kp_count": 1,
+      "kp_top": "求二项展开式的通项（第k+1项）"
+    },
+    {
+      "idx": 30,
+      "id": "210e1ef1-1b09-43c7-a0d4-03b46c14e358",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2021,
+      "kp_count": 3,
+      "kp_top": "复数的概念"
+    },
+    {
+      "idx": 31,
+      "id": "387a0e83-a93f-4ccc-9ad0-8d81883b7113",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2023,
+      "kp_count": 3,
+      "kp_top": "复数的几何意义"
+    },
+    {
+      "idx": 32,
+      "id": "83c9a835-d3a8-44ec-babe-93605619048f",
+      "preset_difficulty": "中等",
+      "star": 3,
+      "ques_type": "填空题",
+      "year": 2021,
+      "kp_count": 1,
+      "kp_top": "导数的几何意义"
+    },
+    {
+      "idx": 33,
+      "id": "1de30801-5ede-4802-825a-d75f15c0007c",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2020,
+      "kp_count": 2,
+      "kp_top": "向量加法的法则"
+    },
+    {
+      "idx": 34,
+      "id": "50c8eba7-8bde-463e-8382-b4cb84df9eb5",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2019,
+      "kp_count": 2,
+      "kp_top": "交集"
+    },
+    {
+      "idx": 35,
+      "id": "74c9066e-044d-446c-8964-556ddbba4b7e",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2023,
+      "kp_count": 1,
+      "kp_top": "两个向量平行时的坐标表示"
+    },
+    {
+      "idx": 36,
+      "id": "17808aea-3fea-479b-b46c-53d25d7e2c60",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "判断题",
+      "year": 2021,
+      "kp_count": 1,
+      "kp_top": "命题、真命题、假命题"
+    },
+    {
+      "idx": 37,
+      "id": "eb88937d-1d5a-4338-b7af-805c74e7a0dc",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2022,
+      "kp_count": 2,
+      "kp_top": "复数的概念"
+    },
+    {
+      "idx": 38,
+      "id": "81a9955d-c4ea-4fd7-8093-190ed8c24887",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "填空题",
+      "year": 2023,
+      "kp_count": 1,
+      "kp_top": "对数的运算性质"
+    },
+    {
+      "idx": 39,
+      "id": "c808380b-8b79-4123-b7e0-ede3e08b73af",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2024,
+      "kp_count": 2,
+      "kp_top": "直线的倾斜角与斜率"
+    },
+    {
+      "idx": 40,
+      "id": "81ac8771-a089-40b5-921d-759e2c67208a",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "单选题",
+      "year": 2020,
+      "kp_count": 1,
+      "kp_top": "复数的概念"
+    },
+    {
+      "idx": 41,
+      "id": "98c09115-51ca-4e8c-a7f4-a70e2f66b358",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "填空题",
+      "year": 2021,
+      "kp_count": 1,
+      "kp_top": "求二项展开式的通项（第k+1项）"
+    },
+    {
+      "idx": 42,
+      "id": "ecf88602-dac2-44b7-bdc6-0e0729763361",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "单选题",
+      "year": 2020,
+      "kp_count": 1,
+      "kp_top": "二项式定理"
+    },
+    {
+      "idx": 43,
+      "id": "8ee390cf-7fe7-4258-8a7d-67e93e2332d4",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2020,
+      "kp_count": 2,
+      "kp_top": "并集"
+    },
+    {
+      "idx": 44,
+      "id": "cb09988a-0e87-489e-ad4b-9958fc60bf36",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2021,
+      "kp_count": 1,
+      "kp_top": "充分条件"
+    },
+    {
+      "idx": 45,
+      "id": "b40a2ca0-8bdf-4a70-b48c-d244a24b6794",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "填空题",
+      "year": 2021,
+      "kp_count": 1,
+      "kp_top": "残差的计算"
+    },
+    {
+      "idx": 46,
+      "id": "38f4370d-bf49-4592-abf0-42242c6b6590",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2022,
+      "kp_count": 2,
+      "kp_top": "数系的扩充和复数的概念"
+    },
+    {
+      "idx": 47,
+      "id": "16d97e17-a87d-4512-b3b2-13a4b4b32489",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "填空题",
+      "year": 2020,
+      "kp_count": 1,
+      "kp_top": "函数的奇偶性"
+    },
+    {
+      "idx": 48,
+      "id": "06f47b16-60c2-4969-a5d8-f5b275a4e90e",
+      "preset_difficulty": "容易",
+      "star": 1,
+      "ques_type": "单选题",
+      "year": 2020,
+      "kp_count": 2,
+      "kp_top": "复数的模或绝对值"
+    },
+    {
+      "idx": 49,
+      "id": "b15ecb6b-7f67-4218-b0ac-f7083f190e3c",
+      "preset_difficulty": "较易",
+      "star": 2,
+      "ques_type": "单选题",
+      "year": 2019,
+      "kp_count": 2,
+      "kp_top": "函数的奇偶性"
+    },
+    {
+      "idx": 50,
+      "id": "0ec2fc3d-7193-465a-9032-e819a24104af",
+      "preset_difficulty": "中等",
+      "star": 3,
+      "ques_type": "单选题",
+      "year": 2020,
+      "kp_count": 1,
+      "kp_top": "三角函数图象的变换"
+    }
+  ]
+}
