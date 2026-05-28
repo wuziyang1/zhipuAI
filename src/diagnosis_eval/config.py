@@ -9,7 +9,7 @@ load_dotenv()
 
 # ==================== 数据配置 ====================
 # 测试集 raw_data.json 路径（相对于项目根目录）
-INPUT_RAW_DATA = 'src/multi_agent_pipeline/output/2026-05-25_18-40-44/raw_data.json'
+INPUT_RAW_DATA = 'src/multi_agent_pipeline/output/2026-05-25_21-27-11/raw_data.json'
 
 # 只评测通过质量审核的案例（gold 标签更可靠）
 USE_PASSED_CASES_ONLY = True
