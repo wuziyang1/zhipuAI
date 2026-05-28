@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智谱 AI · 数学诊断助手</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <!-- 侧边栏 -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <span class="logo-text">智谱诊断</span>
+        </div>
+        <button class="sidebar-close" id="sidebarClose" aria-label="关闭侧边栏">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <button class="btn-new-chat" id="btnNewChat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        新建对话
+      </button>
+
+      <div class="history-section">
+        <div class="history-label">历史会话</div>
+        <ul class="history-list" id="historyList"></ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="btn-settings" id="btnSettings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          设置
+        </button>
+      </div>
+    </aside>
+
+    <!-- 主聊天区 -->
+    <main class="main">
+      <header class="chat-header">
+        <button class="btn-menu" id="btnMenu" aria-label="打开侧边栏">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"/>
+          </svg>
+        </button>
+        <h1 class="chat-title" id="chatTitle">新对话</h1>
+      </header>
+
+      <div class="messages-container" id="messagesContainer">
+        <div class="messages" id="messages">
+          <div class="welcome" id="welcome">
+            <div class="welcome-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <h2>数学作答诊断助手</h2>
+            <p>请按以下格式输入题目和你的作答，AI 将为你诊断错误并给出改进建议。</p>
+            <div class="welcome-example">
+              <pre>题目：解方程 2x + 3 = 7
+作答：2x = 10，x = 5</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="input-area">
+        <div class="input-wrapper">
+          <textarea
+            id="messageInput"
+            placeholder="输入题目和作答，格式：题目：...&#10;作答：..."
+            rows="1"
+            maxlength="8000"
+          ></textarea>
+          <button class="btn-send" id="btnSend" disabled aria-label="发送">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+            </svg>
+          </button>
+        </div>
+        <p class="input-hint">Enter 发送 · Shift+Enter 换行</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- 设置弹窗 -->
+  <div class="modal-overlay" id="settingsModal" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h3>设置</h3>
+        <button class="modal-close" id="settingsClose" aria-label="关闭">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label" for="apiBase">API 地址</label>
+        <input type="text" id="apiBase" class="form-input" placeholder="http://127.0.0.1:8000/api/v1" />
+
+        <label class="form-check">
+          <input type="checkbox" id="includeAnalysis" />
+          <span>开启题目分析（额外 1 次 LLM 调用）</span>
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary" id="settingsSave">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/markdown.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
